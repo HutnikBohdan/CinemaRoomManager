@@ -4,32 +4,50 @@ public class Cinema {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-/*        String[][] cinema = {
-                {" ", "1", "2", "3", "4", "5", "6", "7", "8"},
-                {"1", "S", "S", "S", "S", "S", "S", "S", "S"},
-                {"2", "S", "S", "S", "S", "S", "S", "S", "S"},
-                {"3", "S", "S", "S", "S", "S", "S", "S", "S"},
-                {"4", "S", "S", "S", "S", "S", "S", "S", "S"},
-                {"5", "S", "S", "S", "S", "S", "S", "S", "S"},
-                {"6", "S", "S", "S", "S", "S", "S", "S", "S"},
-                {"7", "S", "S", "S", "S", "S", "S", "S", "S"}
-        };
 
-
-        System.out.println("Cinema:");
-        for (int i = 0; i < cinema.length; i++) {
-            for(int j = 0; j < cinema[i].length; j++) {
-                System.out.print(cinema[i][j] + " ");
-            }
-            System.out.println();
-        }*/
         System.out.println("Enter the number of rows:");
-        int rows = input.nextInt();
+        int cinmRows = input.nextInt();
 
         System.out.println("Enter the number of seats in each row:");
+        int cinmNumSeat = input.nextInt();
+
+        String[][] cinema = new String[cinmRows + 1][cinmNumSeat + 1];
+
+        for (int i = 0; i < cinema.length; i++) {
+            for (int j = 0; j < cinema[i].length; j++) {
+                if (i == 0 && j > 0) {
+                    cinema[0][j] =  (j + "");
+                } else if (j == 0 && i > 0) {
+                    cinema[i][j] =(i + "");
+                } else if (i > 0 && j > 0) {
+                    cinema[i][j] = "S";
+                } else {
+                    cinema[i][j] = " ";
+                }
+            }
+        }
+        Cinema.cinemaPrint(cinema);
+
+        System.out.println("Enter a row number:");
+        int rows = input.nextInt();
+
+        System.out.println("Enter a seat number in that row:");
         int seatsInEachRow = input.nextInt();
 
-        int summ$ = 0;
+
+        int price = 0;
+        if (cinmRows * cinmNumSeat <= 60) {
+           price = 10;
+        } else if ((cinmRows / 2) >= rows) {
+            price = 10;
+        } else {
+            price = 8;
+        }
+        System.out.println("Ticket price: $" + price);
+        cinema[rows][seatsInEachRow] = "B";
+        Cinema.cinemaPrint(cinema);
+
+/*        int summ$ = 0;
         if (rows * seatsInEachRow <= 60) {
             summ$ = rows * seatsInEachRow * 10;
         } else if (rows > 4) {
@@ -37,8 +55,18 @@ public class Cinema {
         }
 
         System.out.println("Total income:");
-        System.out.println("$" + summ$);
+        System.out.println("$" + summ$);*/
 
+    }
+
+    public static void cinemaPrint(String[][] cinema) {
+        System.out.println("Cinema:");
+        for (int i = 0; i < cinema.length; i++) {
+            for(int j = 0; j < cinema[i].length; j++) {
+                System.out.print(cinema[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
 
