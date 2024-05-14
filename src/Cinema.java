@@ -29,9 +29,13 @@ public class Cinema {
 
 
         boolean exit = false;
+        int currentIncome = 0;
+        int counTicket = 0;
+        int totalIncome = 0;
         while (!exit) {
             System.out.println("\n1. Show the seats");
             System.out.println("2. Buy a ticket");
+            System.out.println("3. Statistics");
             System.out.println("0. Exit\n");
             int menu = input.nextInt();
             switch (menu) {
@@ -57,10 +61,14 @@ public class Cinema {
                     } else {
                         price = 8;
                     }
+                    currentIncome += price;
                     System.out.println("Ticket price: $" + price);
                     cinema[rows][seatsInEachRow] = "B";
-                    Cinema.cinemaPrint(cinema);
+                    //Cinema.cinemaPrint(cinema);
                     break;
+                case 3:
+                    Cinema.cinStat(cinema, totalIncome, counTicket, currentIncome);
+
             }
 
         }
@@ -75,6 +83,30 @@ public class Cinema {
             }
             System.out.println();
         }
+    }
+
+    public static void cinStat (String[][] cinema, int counTicket, int totalIncome, int currentIncome) {
+        counTicket = 0;
+        totalIncome = 0;
+        int tict = 0;
+        for (int i = 1; i < cinema.length; i++) {
+            for(int j = 1; j < cinema[i].length; j++) {
+                tict++;
+                counTicket = "B".equals(cinema[i][j]) ? ++counTicket : counTicket;
+                if (cinema.length * cinema[cinema.length - 1].length <= 60) {
+                    totalIncome += 10;
+                } else if (((cinema.length) / 2) >= i) {
+                    totalIncome += 10;
+                } else {
+                    totalIncome += 8;
+                }
+            }
+
+        }
+        System.out.println("Number of purchased tickets: " + counTicket);
+        System.out.println(String.format("Percentage: %.2f", ((double) 100 / tict * counTicket)) + "%");
+        System.out.println("Current income: $" + currentIncome);
+        System.out.println("Total income: $" + totalIncome);
     }
 }
 
