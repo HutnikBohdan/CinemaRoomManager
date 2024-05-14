@@ -26,36 +26,44 @@ public class Cinema {
                 }
             }
         }
-        Cinema.cinemaPrint(cinema);
-
-        System.out.println("Enter a row number:");
-        int rows = input.nextInt();
-
-        System.out.println("Enter a seat number in that row:");
-        int seatsInEachRow = input.nextInt();
 
 
-        int price = 0;
-        if (cinmRows * cinmNumSeat <= 60) {
-           price = 10;
-        } else if ((cinmRows / 2) >= rows) {
-            price = 10;
-        } else {
-            price = 8;
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\n1. Show the seats");
+            System.out.println("2. Buy a ticket");
+            System.out.println("0. Exit\n");
+            int menu = input.nextInt();
+            switch (menu) {
+                case 0:
+                    exit = true;
+                    break;
+                case 1:
+                    Cinema.cinemaPrint(cinema);
+                    break;
+                case 2:
+                    System.out.println("Enter a row number:");
+                    int rows = input.nextInt();
+
+                    System.out.println("Enter a seat number in that row:");
+                    int seatsInEachRow = input.nextInt();
+
+
+                    int price = 0;
+                    if (cinmRows * cinmNumSeat <= 60) {
+                        price = 10;
+                    } else if ((cinmRows / 2) >= rows) {
+                        price = 10;
+                    } else {
+                        price = 8;
+                    }
+                    System.out.println("Ticket price: $" + price);
+                    cinema[rows][seatsInEachRow] = "B";
+                    Cinema.cinemaPrint(cinema);
+                    break;
+            }
+
         }
-        System.out.println("Ticket price: $" + price);
-        cinema[rows][seatsInEachRow] = "B";
-        Cinema.cinemaPrint(cinema);
-
-/*        int summ$ = 0;
-        if (rows * seatsInEachRow <= 60) {
-            summ$ = rows * seatsInEachRow * 10;
-        } else if (rows > 4) {
-            summ$ = ((rows / 2) * seatsInEachRow * 10) + (rows - (rows / 2))  * seatsInEachRow * 8;
-        }
-
-        System.out.println("Total income:");
-        System.out.println("$" + summ$);*/
 
     }
 
@@ -73,19 +81,3 @@ public class Cinema {
 
 
 
-
-
-/*
-        for (int i = 0; i < cinema.length; i++) {
-            for (int j = 0; j < cinema[i].length; j++) {
-                 if (i == 0 && j > 0) {
-                     cinema[0][j] =  (j + "");
-                 } else if (j == 0 && i > 0) {
-                     cinema[i][j] =(i + "");
-                 } else if (i > 0 && j > 0) {
-                    cinema[i][j] = "S";
-                 } else {
-                    cinema[i][j] = " ";
-                 }
-            }
-        }*/
