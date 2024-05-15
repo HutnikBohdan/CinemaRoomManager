@@ -38,6 +38,7 @@ public class Cinema {
             System.out.println("3. Statistics");
             System.out.println("0. Exit\n");
             int menu = input.nextInt();
+            input.nextLine();
             switch (menu) {
                 case 0:
                     exit = true;
@@ -46,26 +47,61 @@ public class Cinema {
                     Cinema.cinemaPrint(cinema);
                     break;
                 case 2:
-                    System.out.println("Enter a row number:");
-                    int rows = input.nextInt();
+                    while (true) {
+                        int seatsInEachRow;
+                        int rows;
+                        while (true) {
+                            System.out.println("\nEnter a row number:\n");
+                            String rowsStr = input.nextLine();
+                            try {
+                                rows = Integer.parseInt(rowsStr);
+                                break;
+                            } catch (Exception e) {
+                                System.out.println("\nPlease input num!\n");
+                            }
+                        }
 
-                    System.out.println("Enter a seat number in that row:");
-                    int seatsInEachRow = input.nextInt();
+                        while (true) {
+                            System.out.println("\nEnter a seat number in that row:\n");
+                            String seatsInEachRowStr = input.nextLine();
+                            try {
+                                seatsInEachRow = Integer.parseInt(seatsInEachRowStr);
+                                break;
+                            } catch (Exception e) {
+                                System.out.println("Please input num!");
+                            }
+                        }
 
 
-                    int price = 0;
-                    if (cinmRows * cinmNumSeat <= 60) {
-                        price = 10;
-                    } else if ((cinmRows / 2) >= rows) {
-                        price = 10;
-                    } else {
-                        price = 8;
+                        if (seatsInEachRow < cinema[0].length && rows < cinema.length)  {
+                            if ("B".equals(cinema[rows][seatsInEachRow])) {
+                                System.out.println("\nThat ticket has already been purchased!\n");
+                                continue;
+                            } else {
+                                cinema[rows][seatsInEachRow] = "B";
+                            }
+                        } else {
+                            System.out.println("\nWrong input!\n");
+                            continue;
+                        }
+
+                        int price = 0;
+                        if (cinmRows * cinmNumSeat <= 60) {
+                            price = 10;
+                        } else if ((cinmRows / 2) >= rows) {
+                            price = 10;
+                        } else {
+                            price = 8;
+                        }
+                        currentIncome += price;
+                        System.out.println("\nTicket price: $" + price + "\n");
+                        cinema[rows][seatsInEachRow] = "B";
+                        //Cinema.cinemaPrint(cinema);
+                        break;
+
                     }
-                    currentIncome += price;
-                    System.out.println("Ticket price: $" + price);
-                    cinema[rows][seatsInEachRow] = "B";
-                    //Cinema.cinemaPrint(cinema);
                     break;
+
                 case 3:
                     Cinema.cinStat(cinema, totalIncome, counTicket, currentIncome);
 
@@ -95,7 +131,7 @@ public class Cinema {
                 counTicket = "B".equals(cinema[i][j]) ? ++counTicket : counTicket;
                 if (cinema.length * cinema[cinema.length - 1].length <= 60) {
                     totalIncome += 10;
-                } else if (((cinema.length) / 2) >= i) {
+                } else if ((((cinema.length) - 1) / 2) >= i) {
                     totalIncome += 10;
                 } else {
                     totalIncome += 8;
